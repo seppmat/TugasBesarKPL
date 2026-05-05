@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TugasKu_TUBES_KPL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8e035c512a1cb08333533475abec8abb3b3f1d9d")]
 [assembly: System.Reflection.AssemblyProductAttribute("TugasKu_TUBES_KPL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TugasKu_TUBES_KPL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
