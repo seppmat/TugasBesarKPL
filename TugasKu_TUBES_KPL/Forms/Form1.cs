@@ -6,11 +6,29 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using TugasKu_TUBES_KPL.Controls;
+
 namespace TugasKu_TUBES_KPL
 {
     public partial class Form1 : Form
     {
-        private List<TaskItem> tasks = new List<TaskItem>();
+        // ✅ GANTI List<TaskItem> dengan GenericRepository
+        private GenericRepository<TaskItem> repository = new GenericRepository<TaskItem>();
+
+        // ✅ TABLE-DRIVEN: mapping untuk filter (hindari if/switch)
+        private readonly Dictionary<int, TaskStatus> statusTable = new Dictionary<int, TaskStatus>
+        {
+            { 1, TaskStatus.NotStarted },   // "⏳ Belum"
+            { 2, TaskStatus.InProgress },   // "🔄 Proses"
+            { 3, TaskStatus.Done }          // "✅ Selesai"
+        };
+
+        private readonly Dictionary<int, TaskPriority> priorityTable = new Dictionary<int, TaskPriority>
+        {
+            { 1, TaskPriority.High },       // " High"
+            { 2, TaskPriority.Medium },     // "🟡 Medium"
+            { 3, TaskPriority.Low }         // " Low"
+        };
+
         private string dataFile = "tasks.json";
         private DataGridView grid;
         private PlaceholderTextBox searchBox;
@@ -95,7 +113,8 @@ namespace TugasKu_TUBES_KPL
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    tasks.Add(form.Task);
+                    // Gunakan repository untuk menambah
+                    repository.Add(form.Task);
                     RefreshGrid();
                     SaveData();
                     ToastNotification.Show("✅ Tugas berhasil ditambahkan!", ColorTranslator.FromHtml("#4ade80"), this);
@@ -106,28 +125,36 @@ namespace TugasKu_TUBES_KPL
         private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            var filtered = GetFilteredTasks();
-            var task = filtered[e.RowIndex];
-            var originalIndex = tasks.IndexOf(task);
 
+            var filtered = GetFilteredTasks();            // daftar terfilter
+            var task = filtered[e.RowIndex];              // objek yang dipilih
+
+            // Cari indeks asli di dalam list penuh (repository)
+            var allTasks = repository.GetAll();
+            var originalIndex = allTasks.IndexOf(task);
+
+            if (originalIndex == -1) return; // data sudah tidak cocok
+
+            // Column 5 = Edit
             if (e.ColumnIndex == 5)
             {
                 using (var form = new TaskForm(task))
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
-                        tasks[originalIndex] = form.Task;
+                        repository.Update(originalIndex, form.Task); // ✅ update via repository
                         RefreshGrid();
                         SaveData();
                         ToastNotification.Show("✅ Tugas diperbarui!", ColorTranslator.FromHtml("#60a5fa"), this);
                     }
                 }
             }
+            // Column 6 = Delete
             else if (e.ColumnIndex == 6)
             {
                 if (MessageBox.Show("Yakin ingin menghapus tugas ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    tasks.RemoveAt(originalIndex);
+                    repository.Delete(originalIndex); // ✅ hapus via repository
                     RefreshGrid();
                     SaveData();
                     ToastNotification.Show("🗑️ Tugas dihapus", ColorTranslator.FromHtml("#f87171"), this);
@@ -135,35 +162,41 @@ namespace TugasKu_TUBES_KPL
             }
         }
 
+        // ✅ TABLE-DRIVEN: filter dengan dictionary ganti if-else berantai
         private List<TaskItem> GetFilteredTasks()
         {
+            var allTasks = repository.GetAll();
             string keyword = searchBox.Text == searchBox.Placeholder ? "" : searchBox.Text.ToLower();
-            var statusFilter = filterStatus.SelectedIndex == 0 ? -1 : filterStatus.SelectedIndex - 1;
-            var priorityFilter = filterPriority.SelectedIndex == 0 ? -1 : filterPriority.SelectedIndex - 1;
 
-            return tasks.Where(t =>
+            TaskStatus? targetStatus = null;
+            if (filterStatus.SelectedIndex != 0)
+                targetStatus = statusTable.TryGetValue(filterStatus.SelectedIndex, out var s) ? s : (TaskStatus?)null;
+
+            TaskPriority? targetPriority = null;
+            if (filterPriority.SelectedIndex != 0)
+                targetPriority = priorityTable.TryGetValue(filterPriority.SelectedIndex, out var p) ? p : (TaskPriority?)null;
+
+            return allTasks.Where(t =>
                 (string.IsNullOrWhiteSpace(keyword) || t.Name.ToLower().Contains(keyword) || t.Course.ToLower().Contains(keyword)) &&
-                (statusFilter == -1 || (int)t.Status == statusFilter) &&
-                (priorityFilter == -1 || (int)t.Priority == priorityFilter)
+                (!targetStatus.HasValue || t.Status == targetStatus.Value) &&
+                (!targetPriority.HasValue || t.Priority == targetPriority.Value)
             ).OrderBy(t => t.Deadline).ToList();
         }
 
+        // ✅ RefreshGrid (tidak ada perubahan indeks tombol, tetap 5 dan 6)
         private void RefreshGrid()
         {
             grid.Rows.Clear();
             var filtered = GetFilteredTasks();
             emptyState.Visible = filtered.Count == 0;
             grid.Visible = filtered.Count > 0;
+
             foreach (var t in filtered)
                 grid.Rows.Add(t.Name, t.Course, t.Deadline.ToString("dd MMM yyyy"), t.Priority.ToString(), t.Status.ToString());
         }
 
-        private void SaveData() => File.WriteAllText(dataFile, JsonConvert.SerializeObject(tasks, Formatting.Indented));
-
-        private void LoadData()
-        {
-            if (File.Exists(dataFile))
-                tasks = JsonConvert.DeserializeObject<List<TaskItem>>(File.ReadAllText(dataFile)) ?? new List<TaskItem>();
-        }
+        // ✅ Gunakan repository untuk penyimpanan data
+        private void SaveData() => repository.Save("tasks.json");
+        private void LoadData() => repository.Load("tasks.json");
     }
 }
