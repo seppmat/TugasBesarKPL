@@ -1,0 +1,62 @@
+[
+  {
+    "Name": "Belum Makan",
+    "Course": "KPL",
+    "Deadline": "2026-04-15T00:00:00+07:00",
+    "Priority": 2,
+    "Status": 0,
+    "CurrentState": {
+      "Label": "⏳ Belum",
+      "CanEdit": true,
+      "CanDelete": true
+    }
+  },
+  {
+    "Name": "Tugas",
+    "Course": "Basis Data",
+    "Deadline": "2026-04-15T00:00:00+07:00",
+    "Priority": 2,
+    "Status": 0,
+    "CurrentState": {
+      "Label": "⏳ Belum",
+      "CanEdit": true,
+      "CanDelete": true
+    }
+  },
+  {
+    "Name": "Akhir",
+    "Course": "KPL",
+    "Deadline": "2026-04-15T00:00:00+07:00",
+    "Priority": 0,
+    "Status": 0,
+    "CurrentState": {
+      "Label": "⏳ Belum",
+      "CanEdit": true,
+      "CanDelete": true
+    }
+  },
+  {
+    "Name": "Ikan",
+    "Course": "KPL",
+    "Deadline": "2026-04-15T00:00:00+07:00",
+    "Priority": 1,
+    "Status": 0,
+    "CurrentState": {
+      "Label": "⏳ Belum",
+      "CanEdit": true,
+      "CanDelete": true
+    }
+  },
+  {
+    "Name": "llll",
+    "Course": "hhh",
+    "Deadline": "2026-04-21T00:00:00+07:00",
+    "Priority": 0,
+    "Status": 0,
+    "CurrentState": {
+      "Label": "⏳ Belum",
+      "CanEdit": true,
+      "CanDelete": true
+    }
+  }
+]
