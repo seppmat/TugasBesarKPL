@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj": {}
+    "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Yosep\\main\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj": {}
   },
   "projects": {
-    "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj": {
+    "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Yosep\\main\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj",
+        "projectUniqueName": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Yosep\\main\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj",
         "projectName": "TugasKu_TUBES_KPL",
-        "projectPath": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj",
+        "projectPath": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Yosep\\main\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj",
         "packagesPath": "C:\\Users\\DELL 5310\\.nuget\\packages\\",
-        "outputPath": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\obj\\",
+        "outputPath": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Yosep\\main\\TugasKu_TUBES_KPL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

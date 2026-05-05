@@ -5,7 +5,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Configuration;
 using TugasKu_TUBES_KPL.Controls;
+
+
 namespace TugasKu_TUBES_KPL
 {
     public partial class Form1 : Form
@@ -24,6 +27,16 @@ namespace TugasKu_TUBES_KPL
         public Form1()
         {
             InitializeComponent();
+            LoadData();
+            RefreshGrid();
+
+            // ✅ RUNTIME CONFIG: Load skala UI saat startup
+            UIScaler.LoadSettings();
+
+            // Terapkan ke kontrol utama
+            var header = this.Controls.Find("headerLabel", true)[0] as Label; // Sesuaikan nama kontrol
+            if (header != null) header.Font = UIScaler.ScaleFont(new Font("Segoe UI", 18, FontStyle.Bold));
+
             LoadData();
             RefreshGrid();
         }
@@ -95,10 +108,21 @@ namespace TugasKu_TUBES_KPL
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    tasks.Add(form.Task);
+                    // ✅ GENERICS: Validasi dinamis sebelum simpan
+                    bool isValid = GenericValidator<TaskItem>.IsValid(form.Task, t =>
+                        !string.IsNullOrWhiteSpace(t.Name) &&
+                        t.Deadline >= DateTime.Today);
+
+                    if (!isValid)
+                    {
+                        MessageBox.Show("Data tidak valid: Nama kosong atau deadline di masa lalu.", "Validasi Gagal", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    repository.Add(form.Task);
                     RefreshGrid();
                     SaveData();
-                    ToastNotification.Show("✅ Tugas berhasil ditambahkan!", ColorTranslator.FromHtml("#4ade80"), this);
+                    UIHelper.ShowSuccess(this, "Tugas berhasil ditambahkan!");
                 }
             }
         }
