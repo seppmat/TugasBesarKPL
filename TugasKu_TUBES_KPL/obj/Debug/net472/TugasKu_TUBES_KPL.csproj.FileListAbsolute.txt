@@ -10,3 +10,5 @@ D:\Kuliah\Konstruksi Perangkat Lunak\Tugas Besar KPL Fix\TugasKu_TUBES_KPL\Tugas
 D:\Kuliah\Konstruksi Perangkat Lunak\Tugas Besar KPL Fix\TugasKu_TUBES_KPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_.061067DD.Up2Date
 D:\Kuliah\Konstruksi Perangkat Lunak\Tugas Besar KPL Fix\TugasKu_TUBES_KPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.exe
 D:\Kuliah\Konstruksi Perangkat Lunak\Tugas Besar KPL Fix\TugasKu_TUBES_KPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.pdb
+C:\Users\ASUS\source\repos\TugasBesarKPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.exe
+C:\Users\ASUS\source\repos\TugasBesarKPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.pdb
