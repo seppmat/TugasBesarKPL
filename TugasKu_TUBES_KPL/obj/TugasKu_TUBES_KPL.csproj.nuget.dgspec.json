@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj": {}
+    "D:\\SEMESTER 4\\KONTRUKSI PL\\TUBES_KPL\\TugasBesarKPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj": {}
   },
   "projects": {
-    "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj": {
+    "D:\\SEMESTER 4\\KONTRUKSI PL\\TUBES_KPL\\TugasBesarKPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj",
+        "projectUniqueName": "D:\\SEMESTER 4\\KONTRUKSI PL\\TUBES_KPL\\TugasBesarKPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj",
         "projectName": "TugasKu_TUBES_KPL",
-        "projectPath": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj",
-        "packagesPath": "C:\\Users\\DELL 5310\\.nuget\\packages\\",
-        "outputPath": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\obj\\",
+        "projectPath": "D:\\SEMESTER 4\\KONTRUKSI PL\\TUBES_KPL\\TugasBesarKPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj",
+        "packagesPath": "C:\\Users\\Daffa S.R\\.nuget\\packages\\",
+        "outputPath": "D:\\SEMESTER 4\\KONTRUKSI PL\\TUBES_KPL\\TugasBesarKPL\\TugasKu_TUBES_KPL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\DELL 5310\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Daffa S.R\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net472": {
@@ -55,7 +55,7 @@
               "version": "[13.0.4, )"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.311\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

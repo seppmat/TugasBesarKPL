@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "yfZ/xlnhYZQ=",
+  "dgSpecHash": "sOQxtjOvwbE=",
   "success": true,
-  "projectFilePath": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj",
+  "projectFilePath": "D:\\SEMESTER 4\\KONTRUKSI PL\\TUBES_KPL\\TugasBesarKPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\DELL 5310\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512"
+    "C:\\Users\\Daffa S.R\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512"
   ],
   "logs": []
 }
