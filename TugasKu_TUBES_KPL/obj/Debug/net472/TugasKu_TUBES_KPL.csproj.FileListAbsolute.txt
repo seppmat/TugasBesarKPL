@@ -10,3 +10,12 @@ D:\Kuliah\Konstruksi Perangkat Lunak\Tugas Besar KPL Fix\TugasKu_TUBES_KPL\Tugas
 D:\Kuliah\Konstruksi Perangkat Lunak\Tugas Besar KPL Fix\TugasKu_TUBES_KPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_.061067DD.Up2Date
 D:\Kuliah\Konstruksi Perangkat Lunak\Tugas Besar KPL Fix\TugasKu_TUBES_KPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.exe
 D:\Kuliah\Konstruksi Perangkat Lunak\Tugas Besar KPL Fix\TugasKu_TUBES_KPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.pdb
+D:\SEMESTER 4\KONTRUKSI PL\TUBES_KPL\TugasBesarKPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.csproj.AssemblyReference.cache
+D:\SEMESTER 4\KONTRUKSI PL\TUBES_KPL\TugasBesarKPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.exe.config
+D:\SEMESTER 4\KONTRUKSI PL\TUBES_KPL\TugasBesarKPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.GeneratedMSBuildEditorConfig.editorconfig
+D:\SEMESTER 4\KONTRUKSI PL\TUBES_KPL\TugasBesarKPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.AssemblyInfoInputs.cache
+D:\SEMESTER 4\KONTRUKSI PL\TUBES_KPL\TugasBesarKPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.AssemblyInfo.cs
+D:\SEMESTER 4\KONTRUKSI PL\TUBES_KPL\TugasBesarKPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.csproj.CoreCompileInputs.cache
+D:\SEMESTER 4\KONTRUKSI PL\TUBES_KPL\TugasBesarKPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.sourcelink.json
+D:\SEMESTER 4\KONTRUKSI PL\TUBES_KPL\TugasBesarKPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.exe
+D:\SEMESTER 4\KONTRUKSI PL\TUBES_KPL\TugasBesarKPL\TugasKu_TUBES_KPL\obj\Debug\net472\TugasKu_TUBES_KPL.pdb
