@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TugasKu_TUBES_KPL
+namespace TugasKu_TUBES_KPL.Core
 {
 	// Implementasi Service
 	public class TaskService : ITaskService

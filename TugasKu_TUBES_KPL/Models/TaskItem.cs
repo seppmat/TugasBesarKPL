@@ -11,7 +11,7 @@ namespace TugasKu_TUBES_KPL
         public string Course { get; set; } = string.Empty;
         public DateTime Deadline { get; set; } = DateTime.Today;
         public TaskPriority Priority { get; set; } = TaskPriority.Medium;
-        public TaskStatus Status { get; private set; }
+        public TaskStatus Status { get; set; }
         public TaskState CurrentState { get; private set; }
 
         public TaskItem()
@@ -34,13 +34,24 @@ namespace TugasKu_TUBES_KPL
                 throw new ArgumentException("Status tidak valid");
 
             Status = status;
-            CurrentState = status switch
+
+            switch (status)
             {
-                TaskStatus.NotStarted => new NotStartedState(),
-                TaskStatus.InProgress => new InProgressState(),
-                TaskStatus.Done => new DoneState(),
-                _ => throw new InvalidOperationException("State mapping error")
-            };
+                case TaskStatus.NotStarted:
+                    CurrentState = new NotStartedState();
+                    break;
+
+                case TaskStatus.InProgress:
+                    CurrentState = new InProgressState();
+                    break;
+
+                case TaskStatus.Done:
+                    CurrentState = new DoneState();
+                    break;
+
+                default:
+                    throw new InvalidOperationException("State mapping error");
+            }
 
             if (CurrentState == null)
                 throw new InvalidOperationException("CurrentState tidak boleh null");

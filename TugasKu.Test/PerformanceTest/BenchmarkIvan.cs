@@ -1,8 +1,9 @@
 using System;
 using System.Diagnostics;
 using TugasKu_TUBES_KPL;
+using TugasKu_TUBES_KPL.Core;
 
-namespace TugasKu_TUBES_KPL.PerformanceTests
+namespace TugasKu_TUBES_KPL.TugasKu.Tests
 {
 	public static class BenchmarkIvan
 	{

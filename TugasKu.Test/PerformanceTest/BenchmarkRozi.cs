@@ -2,9 +2,9 @@ using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
-using TugasKu_TUBES_KPL;
+using TugasKu_TUBES_KPL.Core;
 
-namespace TugasKu_TUBES_KPL.PerformanceTests
+namespace TugasKu_TUBES_KPL.TugasKu.Tests
 {
     public static class BenchmarkRozi
     {

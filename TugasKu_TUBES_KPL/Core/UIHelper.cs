@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using TugasKu_TUBES_KPL.Controls;
 
 namespace TugasKu_TUBES_KPL
 {

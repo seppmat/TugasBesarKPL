@@ -1,6 +1,6 @@
 using System;
 
-namespace TugasKu_TUBES_KPL
+namespace TugasKu_TUBES_KPL.Core
 {
     // Teknik Automata: Validator transisi state
     public static class AppStateValidator

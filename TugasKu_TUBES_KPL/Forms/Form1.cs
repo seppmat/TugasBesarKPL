@@ -5,210 +5,47 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Configuration;
 using TugasKu_TUBES_KPL.Controls;
+using TugasKu_TUBES_KPL.Core;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-namespace TugasKu_TUBES_KPL
+namespace TugasKu_TUBES_KPL.Forms
 {
     public partial class Form1 : Form
     {
         private string dataFile = "tasks.json";
+
         private DataGridView grid;
         private PlaceholderTextBox searchBox;
         private ComboBox filterStatus, filterPriority;
         private Label emptyState;
-        private Color primary = ColorTranslator.FromHtml("#667eea");
-        private Color background = ColorTranslator.FromHtml("#f7f9fc");
-        private Color surface = Color.White;
-        private Color textPrimary = Color.FromArgb(30, 30, 30);
 
-        public Form1()
+        private readonly Color primary = ColorTranslator.FromHtml("#667eea");
+        private readonly Color background = ColorTranslator.FromHtml("#f7f9fc");
+        private readonly Color surface = Color.White;
+        private readonly Color textPrimary = Color.FromArgb(30, 30, 30);
+
+        // Repository
+        private readonly GenericRepository<TaskItem> repository =
+            new GenericRepository<TaskItem>();
+
+        // TABLE DRIVEN
+        private readonly Dictionary<int, TaskStatus> statusTable =
+            new Dictionary<int, TaskStatus>
         {
-            InitializeComponent();
-            LoadData();
-            RefreshGrid();
+            { 1, TaskStatus.NotStarted },
+            { 2, TaskStatus.InProgress },
+            { 3, TaskStatus.Done }
+        };
 
-            // ✅ RUNTIME CONFIG: Load skala UI saat startup
-            UIScaler.LoadSettings();
-
-            // Terapkan ke kontrol utama
-            var header = this.Controls.Find("headerLabel", true)[0] as Label; // Sesuaikan nama kontrol
-            if (header != null) header.Font = UIScaler.ScaleFont(new Font("Segoe UI", 18, FontStyle.Bold));
-
-            LoadData();
-            RefreshGrid();
-        }
-        private void InitializeComponent()
+        private readonly Dictionary<int, TaskPriority> priorityTable =
+            new Dictionary<int, TaskPriority>
         {
-            // ✅ RUNTIME CONFIG: Baca tema dari App.config
-            Color primary = ConfigManager.LoadColor("PrimaryColor", ColorTranslator.FromHtml("#667eea"));
-            Color bg = ConfigManager.LoadColor("BackgroundColor", ColorTranslator.FromHtml("#f7f9fc"));
+            { 1, TaskPriority.High },
+            { 2, TaskPriority.Medium },
+            { 3, TaskPriority.Low }
+        };
 
-            Text = "Task Manager - TugasKu";
-            Size = new Size(1100, 650);
-            BackColor = bg;
-            StartPosition = FormStartPosition.CenterScreen;
-
-            var sidebar = new Panel { Width = 240, Height = Height, Location = new Point(0, 0), BackColor = primary };
-            Controls.Add(sidebar);
-
-            var logo = new Label { Text = "📚 TugasKu", Font = new Font("Segoe UI", 20, FontStyle.Bold), ForeColor = Color.White, Location = new Point(25, 30), AutoSize = true };
-            sidebar.Controls.Add(logo);
-
-            var btnAdd = new RoundedButton { Text = "+ Tambah Tugas", Size = new Size(190, 45), Location = new Point(25, 90), BackColor = Color.White, ForeColor = primary, FlatStyle = FlatStyle.Flat, Cursor = Cursors.Hand, Radius = 10, Font = new Font("Segoe UI", 10, FontStyle.Bold) };
-            btnAdd.FlatAppearance.BorderSize = 0;
-            btnAdd.Click += (s, e) => AddTask();
-            sidebar.Controls.Add(btnAdd);
-
-        }
-
-        private void InitializeComponent()
-        {
-            Text = "Task Manager - TugasKu";
-            Size = new Size(1100, 650);
-            BackColor = background;
-            StartPosition = FormStartPosition.CenterScreen;
-
-            var sidebar = new Panel { Width = 240, Height = Height, Location = new Point(0, 0), BackColor = primary };
-            Controls.Add(sidebar);
-
-            var logo = new Label { Text = "📚 TugasKu", Font = new Font("Segoe UI", 20, FontStyle.Bold), ForeColor = Color.White, Location = new Point(25, 30), AutoSize = true };
-            sidebar.Controls.Add(logo);
-
-            var btnAdd = new RoundedButton { Text = "+ Tambah Tugas", Size = new Size(190, 45), Location = new Point(25, 90), BackColor = Color.White, ForeColor = primary, FlatStyle = FlatStyle.Flat, Cursor = Cursors.Hand, Radius = 10, Font = new Font("Segoe UI", 10, FontStyle.Bold) };
-            btnAdd.FlatAppearance.BorderSize = 0;
-            btnAdd.Click += (s, e) => AddTask();
-            sidebar.Controls.Add(btnAdd);
-
-            var mainPanel = new Panel { Location = new Point(240, 0), Size = new Size(Width - 240, Height), BackColor = background };
-            Controls.Add(mainPanel);
-
-            var header = new Label { Text = "Dashboard", Font = new Font("Segoe UI", 18, FontStyle.Bold), ForeColor = textPrimary, Location = new Point(30, 25), AutoSize = true };
-            mainPanel.Controls.Add(header);
-
-            searchBox = new PlaceholderTextBox { Placeholder = " Cari tugas...", Location = new Point(30, 70), Width = 280, Height = 35, Font = new Font("Segoe UI", 10), BorderStyle = BorderStyle.FixedSingle };
-            searchBox.TextChanged += (s, e) => RefreshGrid();
-            mainPanel.Controls.Add(searchBox);
-
-            filterPriority = new ComboBox { Location = new Point(330, 70), Width = 140, Height = 35, Font = new Font("Segoe UI", 10), DropDownStyle = ComboBoxStyle.DropDownList };
-            filterPriority.Items.AddRange(new string[] { "Semua Prioritas", " High", "🟡 Medium", " Low" });
-            filterPriority.SelectedIndex = 0;
-            filterPriority.SelectedIndexChanged += (s, e) => RefreshGrid();
-            mainPanel.Controls.Add(filterPriority);
-
-            filterStatus = new ComboBox { Location = new Point(490, 70), Width = 140, Height = 35, Font = new Font("Segoe UI", 10), DropDownStyle = ComboBoxStyle.DropDownList };
-            filterStatus.Items.AddRange(new string[] { "Semua Status", "⏳ Belum", "🔄 Proses", "✅ Selesai" });
-            filterStatus.SelectedIndex = 0;
-            filterStatus.SelectedIndexChanged += (s, e) => RefreshGrid();
-            mainPanel.Controls.Add(filterStatus);
-
-            emptyState = new Label { Text = "🎉 Belum ada tugas!\nKlik tombol di kiri untuk menambah.", Font = new Font("Segoe UI", 12), ForeColor = Color.Gray, TextAlign = ContentAlignment.MiddleCenter, Location = new Point(150, 200), Size = new Size(600, 100), Visible = false };
-            mainPanel.Controls.Add(emptyState);
-
-            grid = new DataGridView { Location = new Point(30, 120), Size = new Size(mainPanel.Width - 60, mainPanel.Height - 150), AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill, AllowUserToAddRows = false, BorderStyle = BorderStyle.None, BackgroundColor = surface, RowTemplate = { Height = 45 }, SelectionMode = DataGridViewSelectionMode.FullRowSelect };
-            grid.Columns.Add("Name", "Tugas");
-            grid.Columns.Add("Course", "Mata Kuliah");
-            grid.Columns.Add("Deadline", "Deadline");
-            grid.Columns.Add("Priority", "Prioritas");
-            grid.Columns.Add("Status", "Status");
-            grid.Columns.Add(new DataGridViewButtonColumn { HeaderText = "Aksi", Text = "✏️", UseColumnTextForButtonValue = true, Width = 60 });
-            grid.Columns.Add(new DataGridViewButtonColumn { HeaderText = "", Text = "🗑️", UseColumnTextForButtonValue = true, Width = 60 });
-            grid.CellClick += Grid_CellClick;
-            grid.ColumnHeadersDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#f9fafb");
-            grid.DefaultCellStyle.SelectionBackColor = ColorTranslator.FromHtml("#eef2ff");
-            grid.DefaultCellStyle.SelectionForeColor = primary;
-            mainPanel.Controls.Add(grid);
-
-            FormClosing += (s, e) => SaveData();
-            Resize += (s, e) => { sidebar.Height = Height; mainPanel.Size = new Size(Width - 240, Height); grid.Size = new Size(mainPanel.Width - 60, mainPanel.Height - 150); };
-        }
-
-        private void AddTask()
-        {
-            using (var form = new TaskForm())
-            {
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-<<<<<<< HEAD
-                    // ✅ GENERICS: Validasi dinamis sebelum simpan
-                    bool isValid = GenericValidator<TaskItem>.IsValid(form.Task, t =>
-                        !string.IsNullOrWhiteSpace(t.Name) &&
-                        t.Deadline >= DateTime.Today);
-
-                    if (!isValid)
-                    {
-                        MessageBox.Show("Data tidak valid: Nama kosong atau deadline di masa lalu.", "Validasi Gagal", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    repository.Add(form.Task);
-                    RefreshGrid();
-                    SaveData();
-                    UIHelper.ShowSuccess(this, "Tugas berhasil ditambahkan!");
-                }
-            }
-        }
-
-        private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-
-            var filtered = GetFilteredTasks();            // daftar terfilter
-            var task = filtered[e.RowIndex];              // objek yang dipilih
-
-            // Cari indeks asli di dalam list penuh (repository)
-            var allTasks = repository.GetAll();
-            var originalIndex = allTasks.IndexOf(task);
-
-            if (originalIndex == -1) return; // data sudah tidak cocok
-
-            // Column 5 = Edit
-            if (e.ColumnIndex == 5)
-            {
-                // Cek apakah status saat ini memperbolehkan edit
-                if (!task.CurrentState.CanEdit)
-                {
-                    MessageBox.Show($"Status \"{task.CurrentState.Label}\" tidak bisa diedit.", "Aksi Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                using (var form = new TaskForm(task))
-                {
-                    if (form.ShowDialog() == DialogResult.OK)
-                    {
-                        repository.Update(originalIndex, form.Task); // ✅ update via repository
-                        RefreshGrid();
-                        SaveData();
-                        UIHelper.ShowInfo(this, "Tugas diperbarui!");
-                    }
-                }
-            }
-            // Column 6 = Delete
-            else if (e.ColumnIndex == 6)
-            {
-                // Cek apakah status saat ini memperbolehkan hapus
-                if (!task.CurrentState.CanDelete)
-                {
-                    MessageBox.Show("Tugas ini tidak bisa dihapus.", "Aksi Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                if (UIHelper.ConfirmDelete(this, task.Name))
-                {
-                    repository.Delete(originalIndex); // ✅ hapus via repository
-                    RefreshGrid();
-                    SaveData();
-                    UIHelper.ShowDanger(this, "Tugas dihapus");
-                }
-            }
-        }
-
-<<<<<<< HEAD
-        // ✅ TECHNIQUE: Table-driven Construction (Mapping Styling)
-        // Map Priority ke Warna (Background, Foreground)
+        // PRIORITY STYLE
         private readonly Dictionary<TaskPriority, (Color Back, Color Fore)> priorityStyleTable =
             new Dictionary<TaskPriority, (Color Back, Color Fore)>
         {
@@ -220,70 +57,208 @@ namespace TugasKu_TUBES_KPL
         public Form1()
         {
             InitializeComponent();
-            // Inisialisasi Service (Dependency Injection sederhana)
-            _taskService = new TaskService();
+
             LoadData();
             RefreshGrid();
         }
 
-        private List<TaskItem> GetFilteredTasks()
+        private void InitializeComponent()
         {
-            var allTasks = repository.GetAll();
-            string keyword = searchBox.Text == searchBox.Placeholder ? "" : searchBox.Text.ToLower();
+            Text = "Task Manager - TugasKu";
+            Size = new Size(1100, 650);
+            BackColor = background;
+            StartPosition = FormStartPosition.CenterScreen;
 
-            TaskStatus? targetStatus = null;
-            if (filterStatus.SelectedIndex != 0)
-                targetStatus = statusTable.TryGetValue(filterStatus.SelectedIndex, out var s) ? s : (TaskStatus?)null;
+            // SIDEBAR
+            var sidebar = new Panel
+            {
+                Width = 240,
+                Height = Height,
+                Location = new Point(0, 0),
+                BackColor = primary
+            };
 
-            TaskPriority? targetPriority = null;
-            if (filterPriority.SelectedIndex != 0)
-                targetPriority = priorityTable.TryGetValue(filterPriority.SelectedIndex, out var p) ? p : (TaskPriority?)null;
+            Controls.Add(sidebar);
 
-            return allTasks.Where(t =>
-                (string.IsNullOrWhiteSpace(keyword) || t.Name.ToLower().Contains(keyword) || t.Course.ToLower().Contains(keyword)) &&
-                (!targetStatus.HasValue || t.Status == targetStatus.Value) &&
-                (!targetPriority.HasValue || t.Priority == targetPriority.Value)
-            ).OrderBy(t => t.Deadline).ToList();
+            var logo = new Label
+            {
+                Text = "📚 TugasKu",
+                Font = new Font("Segoe UI", 20, FontStyle.Bold),
+                ForeColor = Color.White,
+                Location = new Point(25, 30),
+                AutoSize = true
+            };
+
+            sidebar.Controls.Add(logo);
+
+            var btnAdd = new RoundedButton
+            {
+                Text = "+ Tambah Tugas",
+                Size = new Size(190, 45),
+                Location = new Point(25, 90),
+                BackColor = Color.White,
+                ForeColor = primary,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand,
+                Radius = 10,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold)
+            };
+
+            btnAdd.FlatAppearance.BorderSize = 0;
+            btnAdd.Click += (s, e) => AddTask();
+
+            sidebar.Controls.Add(btnAdd);
+
+            // MAIN PANEL
+            var mainPanel = new Panel
+            {
+                Location = new Point(240, 0),
+                Size = new Size(Width - 240, Height),
+                BackColor = background
+            };
+
+            Controls.Add(mainPanel);
+
+            var header = new Label
+            {
+                Text = "Dashboard",
+                Font = new Font("Segoe UI", 18, FontStyle.Bold),
+                ForeColor = textPrimary,
+                Location = new Point(30, 25),
+                AutoSize = true
+            };
+
+            mainPanel.Controls.Add(header);
+
+            // SEARCH
+            searchBox = new PlaceholderTextBox
+            {
+                Placeholder = " Cari tugas...",
+                Location = new Point(30, 70),
+                Width = 280,
+                Height = 35,
+                Font = new Font("Segoe UI", 10),
+                BorderStyle = BorderStyle.FixedSingle
+            };
+
+            searchBox.TextChanged += (s, e) => RefreshGrid();
+
+            mainPanel.Controls.Add(searchBox);
+
+            // FILTER PRIORITY
+            filterPriority = new ComboBox
+            {
+                Location = new Point(330, 70),
+                Width = 140,
+                Height = 35,
+                Font = new Font("Segoe UI", 10),
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+
+            filterPriority.Items.AddRange(new string[]
+            {
+                "Semua Prioritas",
+                "High",
+                "Medium",
+                "Low"
+            });
+
+            filterPriority.SelectedIndex = 0;
+            filterPriority.SelectedIndexChanged += (s, e) => RefreshGrid();
+
+            mainPanel.Controls.Add(filterPriority);
+
+            // FILTER STATUS
+            filterStatus = new ComboBox
+            {
+                Location = new Point(490, 70),
+                Width = 140,
+                Height = 35,
+                Font = new Font("Segoe UI", 10),
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+
+            filterStatus.Items.AddRange(new string[]
+            {
+                "Semua Status",
+                "Belum",
+                "Proses",
+                "Selesai"
+            });
+
+            filterStatus.SelectedIndex = 0;
+            filterStatus.SelectedIndexChanged += (s, e) => RefreshGrid();
+
+            mainPanel.Controls.Add(filterStatus);
+
+            // EMPTY STATE
+            emptyState = new Label
+            {
+                Text = "Belum ada tugas!",
+                Font = new Font("Segoe UI", 12),
+                ForeColor = Color.Gray,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(150, 200),
+                Size = new Size(600, 100),
+                Visible = false
+            };
+
+            mainPanel.Controls.Add(emptyState);
+
+            // GRID
+            grid = new DataGridView
+            {
+                Location = new Point(30, 120),
+                Size = new Size(mainPanel.Width - 60, mainPanel.Height - 150),
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                AllowUserToAddRows = false,
+                BorderStyle = BorderStyle.None,
+                BackgroundColor = surface,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            };
+
+            grid.RowTemplate.Height = 45;
+
+            grid.Columns.Add("Name", "Tugas");
+            grid.Columns.Add("Course", "Mata Kuliah");
+            grid.Columns.Add("Deadline", "Deadline");
+            grid.Columns.Add("Priority", "Prioritas");
+            grid.Columns.Add("Status", "Status");
+
+            grid.Columns.Add(new DataGridViewButtonColumn
+            {
+                HeaderText = "Aksi",
+                Text = "✏️",
+                UseColumnTextForButtonValue = true,
+                Width = 60
+            });
+
+            grid.Columns.Add(new DataGridViewButtonColumn
+            {
+                HeaderText = "",
+                Text = "🗑️",
+                UseColumnTextForButtonValue = true,
+                Width = 60
+            });
+
+            grid.CellClick += Grid_CellClick;
+            grid.CellFormatting += Grid_CellFormatting;
+
+            mainPanel.Controls.Add(grid);
+
+            FormClosing += (s, e) => SaveData();
+
+            Resize += (s, e) =>
+            {
+                sidebar.Height = Height;
+
+                mainPanel.Size = new Size(Width - 240, Height);
+
+                grid.Size = new Size(
+                    mainPanel.Width - 60,
+                    mainPanel.Height - 150);
+            };
         }
-
-        // ✅ RefreshGrid (tidak ada perubahan indeks tombol, tetap 5 dan 6)
-        private void RefreshGrid()
-        {
-            grid.Rows.Clear();
-            var filtered = GetFilteredTasks();
-            emptyState.Visible = filtered.Count == 0;
-            grid.Visible = filtered.Count > 0;
-
-            foreach (var t in filtered)
-                grid.Rows.Add(t.Name, t.Course, t.Deadline.ToString("dd MMM yyyy"), t.Priority.ToString(), t.Status.ToString());
-        }
-
-<<<<<<< HEAD
-        private void SaveData() => File.WriteAllText(dataFile, JsonConvert.SerializeObject(tasks, Formatting.Indented));
-
-        private void LoadData()
-        {
-            if (File.Exists(dataFile))
-                tasks = JsonConvert.DeserializeObject<List<TaskItem>>(File.ReadAllText(dataFile)) ?? new List<TaskItem>();
-        }
-
-        // ✅ GANTI List<TaskItem> dengan GenericRepository
-        private GenericRepository<TaskItem> repository = new GenericRepository<TaskItem>();
-
-        // ✅ TABLE-DRIVEN: mapping untuk filter (hindari if/switch)
-        private readonly Dictionary<int, TaskStatus> statusTable = new Dictionary<int, TaskStatus>
-        {
-            { 1, TaskStatus.NotStarted },   // "⏳ Belum"
-            { 2, TaskStatus.InProgress },   // "🔄 Proses"
-            { 3, TaskStatus.Done }          // "✅ Selesai"
-        };
-
-        private readonly Dictionary<int, TaskPriority> priorityTable = new Dictionary<int, TaskPriority>
-        {
-            { 1, TaskPriority.High },       // " High"
-            { 2, TaskPriority.Medium },     // "🟡 Medium"
-            { 3, TaskPriority.Low }         // " Low"
-        };
 
         private void AddTask()
         {
@@ -291,36 +266,190 @@ namespace TugasKu_TUBES_KPL
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _taskService.AddTask(form.Task);
+                    repository.Add(form.Task);
+
                     RefreshGrid();
                     SaveData();
-                    UIHelper.ShowSuccess(this, "Tugas berhasil ditambahkan!");
+
+                    UIHelper.ShowSuccess(this,
+                        "Tugas berhasil ditambahkan!");
                 }
             }
         }
 
-        private void Grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
+            if (e.RowIndex < 0)
+                return;
 
-            // Cek kolom "Prioritas" (Index 3)
-            if (grid.Columns[e.ColumnIndex].Name == "Priority")
+            var filtered = GetFilteredTasks();
+            var task = filtered[e.RowIndex];
+
+            var allTasks = repository.GetAll();
+
+            var originalIndex = allTasks.IndexOf(task);
+
+            if (originalIndex == -1)
+                return;
+
+            // EDIT
+            if (e.ColumnIndex == 5)
             {
-                var row = grid.Rows[e.RowIndex];
-                if (row.DataBoundItem is TaskItem taskItem)
+                if (!task.CurrentState.CanEdit)
                 {
-                    // ✅ TABLE-DRIVEN: Ambil warna dari Dictionary Lookup
-                    if (priorityStyleTable.TryGetValue(taskItem.Priority, out var style))
+                    MessageBox.Show(
+                        $"Status \"{task.CurrentState.Label}\" tidak bisa diedit.",
+                        "Aksi Ditolak",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+                    return;
+                }
+
+                using (var form = new TaskForm(task))
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
                     {
-                        e.CellStyle.BackColor = style.Back;
-                        e.CellStyle.ForeColor = style.Fore;
+                        repository.Update(originalIndex, form.Task);
+
+                        RefreshGrid();
+                        SaveData();
+
+                        UIHelper.ShowInfo(this,
+                            "Tugas diperbarui!");
                     }
                 }
             }
+
+            // DELETE
+            else if (e.ColumnIndex == 6)
+            {
+                if (!task.CurrentState.CanDelete)
+                {
+                    MessageBox.Show(
+                        "Tugas ini tidak bisa dihapus.",
+                        "Aksi Ditolak",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+                    return;
+                }
+
+                if (UIHelper.ConfirmDelete(this, task.Name))
+                {
+                    repository.Delete(originalIndex);
+
+                    RefreshGrid();
+                    SaveData();
+
+                    UIHelper.ShowDanger(this,
+                        "Tugas dihapus");
+                }
+            }
         }
 
-        // ✅ Gunakan repository untuk penyimpanan data
-        private void SaveData() => repository.Save("tasks.json");
-        private void LoadData() => repository.Load("tasks.json");
+        private List<TaskItem> GetFilteredTasks()
+        {
+            var allTasks = repository.GetAll();
+
+            string keyword =
+                searchBox.Text == searchBox.Placeholder
+                ? ""
+                : searchBox.Text.ToLower();
+
+            TaskStatus? targetStatus = null;
+
+            if (filterStatus.SelectedIndex != 0)
+            {
+                targetStatus =
+                    statusTable.TryGetValue(
+                        filterStatus.SelectedIndex,
+                        out var s)
+                    ? s
+                    : (TaskStatus?)null;
+            }
+
+            TaskPriority? targetPriority = null;
+
+            if (filterPriority.SelectedIndex != 0)
+            {
+                targetPriority =
+                    priorityTable.TryGetValue(
+                        filterPriority.SelectedIndex,
+                        out var p)
+                    ? p
+                    : (TaskPriority?)null;
+            }
+
+            return allTasks
+                .Where(t =>
+                    (string.IsNullOrWhiteSpace(keyword)
+                    || t.Name.ToLower().Contains(keyword)
+                    || t.Course.ToLower().Contains(keyword))
+                    &&
+                    (!targetStatus.HasValue
+                    || t.Status == targetStatus.Value)
+                    &&
+                    (!targetPriority.HasValue
+                    || t.Priority == targetPriority.Value))
+                .OrderBy(t => t.Deadline)
+                .ToList();
+        }
+
+        private void RefreshGrid()
+        {
+            grid.Rows.Clear();
+
+            var filtered = GetFilteredTasks();
+
+            emptyState.Visible = filtered.Count == 0;
+            grid.Visible = filtered.Count > 0;
+
+            foreach (var t in filtered)
+            {
+                grid.Rows.Add(
+                    t.Name,
+                    t.Course,
+                    t.Deadline.ToString("dd MMM yyyy"),
+                    t.Priority.ToString(),
+                    t.Status.ToString());
+            }
+        }
+
+        private void Grid_CellFormatting(
+            object sender,
+            DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            if (grid.Columns[e.ColumnIndex].Name == "Priority")
+            {
+                var filtered = GetFilteredTasks();
+
+                if (e.RowIndex >= filtered.Count)
+                    return;
+
+                var taskItem = filtered[e.RowIndex];
+
+                if (priorityStyleTable.TryGetValue(
+                    taskItem.Priority,
+                    out var style))
+                {
+                    e.CellStyle.BackColor = style.Back;
+                    e.CellStyle.ForeColor = style.Fore;
+                }
+            }
+        }
+
+        private void SaveData()
+        {
+            repository.Save(dataFile);
+        }
+
+        private void LoadData()
+        {
+            repository.Load(dataFile);
+        }
     }
 }

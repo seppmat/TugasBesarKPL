@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TugasKu_TUBES_KPL
+namespace TugasKu_TUBES_KPL.Core
 {
     // ✅ TECHNIQUE: API (Interface)
     public interface ITaskService

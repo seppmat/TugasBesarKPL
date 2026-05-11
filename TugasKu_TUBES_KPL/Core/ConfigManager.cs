@@ -2,7 +2,7 @@ using System;
 using System.Configuration;
 using System.Drawing;
 
-namespace TugasKu_TUBES_KPL
+namespace TugasKu_TUBES_KPL.Core
 {
     // Teknik Runtime Configuration
     public static class ConfigManager
