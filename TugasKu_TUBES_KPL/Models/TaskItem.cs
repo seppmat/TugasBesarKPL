@@ -19,6 +19,15 @@ namespace TugasKu_TUBES_KPL
             SetStatus(TaskStatus.NotStarted);
         }
 
+        public TaskItem(string name, string course, DateTime deadline, TaskPriority priority, TaskStatus status)
+        {
+            Name = name;
+            Course = course;
+            Deadline = deadline;
+            Priority = priority;
+            SetStatus(status);
+        }
+
         public void SetStatus(TaskStatus status)
         {
             if (!Enum.IsDefined(typeof(TaskStatus), status))
