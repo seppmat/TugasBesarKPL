@@ -183,6 +183,25 @@ namespace TugasKu_TUBES_KPL
             }
         }
 
+        // ✅ TECHNIQUE: Table-driven Construction (Mapping Styling)
+        // Map Priority ke Warna (Background, Foreground)
+        private readonly Dictionary<TaskPriority, (Color Back, Color Fore)> priorityStyleTable =
+            new Dictionary<TaskPriority, (Color Back, Color Fore)>
+        {
+            { TaskPriority.High, (ColorTranslator.FromHtml("#fef2f2"), Color.Red) },
+            { TaskPriority.Medium, (ColorTranslator.FromHtml("#fffbeb"), Color.Orange) },
+            { TaskPriority.Low, (ColorTranslator.FromHtml("#f0fdf4"), Color.Green) }
+        };
+
+        public Form1()
+        {
+            InitializeComponent();
+            // Inisialisasi Service (Dependency Injection sederhana)
+            _taskService = new TaskService();
+            LoadData();
+            RefreshGrid();
+        }
+
         private List<TaskItem> GetFilteredTasks()
         {
             string keyword = searchBox.Text == searchBox.Placeholder ? "" : searchBox.Text.ToLower();
@@ -213,5 +232,37 @@ namespace TugasKu_TUBES_KPL
             if (File.Exists(dataFile))
                 tasks = JsonConvert.DeserializeObject<List<TaskItem>>(File.ReadAllText(dataFile)) ?? new List<TaskItem>();
         }
-    }
-}
+
+        private void AddTask()
+        {
+            using (var form = new TaskForm())
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    _taskService.AddTask(form.Task);
+                    RefreshGrid();
+                    SaveData();
+                    UIHelper.ShowSuccess(this, "Tugas berhasil ditambahkan!");
+                }
+            }
+        }
+
+        private void Grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            // Cek kolom "Prioritas" (Index 3)
+            if (grid.Columns[e.ColumnIndex].Name == "Priority")
+            {
+                var row = grid.Rows[e.RowIndex];
+                if (row.DataBoundItem is TaskItem taskItem)
+                {
+                    // ✅ TABLE-DRIVEN: Ambil warna dari Dictionary Lookup
+                    if (priorityStyleTable.TryGetValue(taskItem.Priority, out var style))
+                    {
+                        e.CellStyle.BackColor = style.Back;
+                        e.CellStyle.ForeColor = style.Fore;
+                    }
+                }
+            }
+        }
