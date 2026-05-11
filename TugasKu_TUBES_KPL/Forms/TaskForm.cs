@@ -36,6 +36,31 @@ namespace TugasKu_TUBES_KPL
             cbStatus.SelectedIndex = (int)item.Status;
         }
 
+        private void SaveTask(object sender, EventArgs e)
+        {
+            // ... (validasi nama & mata kuliah tetap sama)
+
+            TaskStatus targetStatus = (TaskStatus)cbStatus.SelectedIndex;
+
+            // ✅ AUTOMATA: Cek transisi sebelum simpan
+            if (existingTask != null) // Mode edit
+            {
+                try
+                {
+                    AppStateValidator.ApplyTransition(existingTask, targetStatus);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    MessageBox.Show(ex.Message, "Gagal Simpan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            Task = new TaskItem { Name = name, Course = course, Deadline = date.Value.Date, Priority = (TaskPriority)cbPriority.SelectedIndex, Status = targetStatus };
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
         private void InitUI()
         {
             int marginX = 40, width = 400, y = 40, gap = 30;

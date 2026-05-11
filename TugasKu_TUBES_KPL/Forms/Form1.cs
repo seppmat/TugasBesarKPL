@@ -40,6 +40,30 @@ namespace TugasKu_TUBES_KPL
             LoadData();
             RefreshGrid();
         }
+        private void InitializeComponent()
+        {
+            // ✅ RUNTIME CONFIG: Baca tema dari App.config
+            Color primary = ConfigManager.LoadColor("PrimaryColor", ColorTranslator.FromHtml("#667eea"));
+            Color bg = ConfigManager.LoadColor("BackgroundColor", ColorTranslator.FromHtml("#f7f9fc"));
+
+            Text = "Task Manager - TugasKu";
+            Size = new Size(1100, 650);
+            BackColor = bg;
+            StartPosition = FormStartPosition.CenterScreen;
+
+            var sidebar = new Panel { Width = 240, Height = Height, Location = new Point(0, 0), BackColor = primary };
+            Controls.Add(sidebar);
+
+            var logo = new Label { Text = "📚 TugasKu", Font = new Font("Segoe UI", 20, FontStyle.Bold), ForeColor = Color.White, Location = new Point(25, 30), AutoSize = true };
+            sidebar.Controls.Add(logo);
+
+            var btnAdd = new RoundedButton { Text = "+ Tambah Tugas", Size = new Size(190, 45), Location = new Point(25, 90), BackColor = Color.White, ForeColor = primary, FlatStyle = FlatStyle.Flat, Cursor = Cursors.Hand, Radius = 10, Font = new Font("Segoe UI", 10, FontStyle.Bold) };
+            btnAdd.FlatAppearance.BorderSize = 0;
+            btnAdd.Click += (s, e) => AddTask();
+            sidebar.Controls.Add(btnAdd);
+
+            // ... (sisanya tetap sama, gunakan variabel 'primary' dan 'bg' yang sudah dimuat)
+        }
 
         private void InitializeComponent()
         {
