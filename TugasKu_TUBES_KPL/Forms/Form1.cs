@@ -9,31 +9,12 @@ using System.Configuration;
 using TugasKu_TUBES_KPL.Controls;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
-=======
->>>>>>> origin/Edward
 namespace TugasKu_TUBES_KPL
 {
     public partial class Form1 : Form
     {
-        // ✅ GANTI List<TaskItem> dengan GenericRepository
-        private GenericRepository<TaskItem> repository = new GenericRepository<TaskItem>();
-
-        // ✅ TABLE-DRIVEN: mapping untuk filter (hindari if/switch)
-        private readonly Dictionary<int, TaskStatus> statusTable = new Dictionary<int, TaskStatus>
-        {
-            { 1, TaskStatus.NotStarted },   // "⏳ Belum"
-            { 2, TaskStatus.InProgress },   // "🔄 Proses"
-            { 3, TaskStatus.Done }          // "✅ Selesai"
-        };
-
-        private readonly Dictionary<int, TaskPriority> priorityTable = new Dictionary<int, TaskPriority>
-        {
-            { 1, TaskPriority.High },       // " High"
-            { 2, TaskPriority.Medium },     // "🟡 Medium"
-            { 3, TaskPriority.Low }         // " Low"
-        };
-
         private string dataFile = "tasks.json";
         private DataGridView grid;
         private PlaceholderTextBox searchBox;
@@ -82,7 +63,6 @@ namespace TugasKu_TUBES_KPL
             btnAdd.Click += (s, e) => AddTask();
             sidebar.Controls.Add(btnAdd);
 
-            // ... (sisanya tetap sama, gunakan variabel 'primary' dan 'bg' yang sudah dimuat)
         }
 
         private void InitializeComponent()
@@ -188,6 +168,13 @@ namespace TugasKu_TUBES_KPL
             // Column 5 = Edit
             if (e.ColumnIndex == 5)
             {
+                // Cek apakah status saat ini memperbolehkan edit
+                if (!task.CurrentState.CanEdit)
+                {
+                    MessageBox.Show($"Status \"{task.CurrentState.Label}\" tidak bisa diedit.", "Aksi Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 using (var form = new TaskForm(task))
                 {
                     if (form.ShowDialog() == DialogResult.OK)
@@ -195,19 +182,26 @@ namespace TugasKu_TUBES_KPL
                         repository.Update(originalIndex, form.Task); // ✅ update via repository
                         RefreshGrid();
                         SaveData();
-                        ToastNotification.Show("✅ Tugas diperbarui!", ColorTranslator.FromHtml("#60a5fa"), this);
+                        UIHelper.ShowInfo(this, "Tugas diperbarui!");
                     }
                 }
             }
             // Column 6 = Delete
             else if (e.ColumnIndex == 6)
             {
-                if (MessageBox.Show("Yakin ingin menghapus tugas ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                // Cek apakah status saat ini memperbolehkan hapus
+                if (!task.CurrentState.CanDelete)
+                {
+                    MessageBox.Show("Tugas ini tidak bisa dihapus.", "Aksi Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                if (UIHelper.ConfirmDelete(this, task.Name))
                 {
                     repository.Delete(originalIndex); // ✅ hapus via repository
                     RefreshGrid();
                     SaveData();
-                    ToastNotification.Show("🗑️ Tugas dihapus", ColorTranslator.FromHtml("#f87171"), this);
+                    UIHelper.ShowDanger(this, "Tugas dihapus");
                 }
             }
         }
@@ -272,6 +266,24 @@ namespace TugasKu_TUBES_KPL
             if (File.Exists(dataFile))
                 tasks = JsonConvert.DeserializeObject<List<TaskItem>>(File.ReadAllText(dataFile)) ?? new List<TaskItem>();
         }
+
+        // ✅ GANTI List<TaskItem> dengan GenericRepository
+        private GenericRepository<TaskItem> repository = new GenericRepository<TaskItem>();
+
+        // ✅ TABLE-DRIVEN: mapping untuk filter (hindari if/switch)
+        private readonly Dictionary<int, TaskStatus> statusTable = new Dictionary<int, TaskStatus>
+        {
+            { 1, TaskStatus.NotStarted },   // "⏳ Belum"
+            { 2, TaskStatus.InProgress },   // "🔄 Proses"
+            { 3, TaskStatus.Done }          // "✅ Selesai"
+        };
+
+        private readonly Dictionary<int, TaskPriority> priorityTable = new Dictionary<int, TaskPriority>
+        {
+            { 1, TaskPriority.High },       // " High"
+            { 2, TaskPriority.Medium },     // "🟡 Medium"
+            { 3, TaskPriority.Low }         // " Low"
+        };
 
         private void AddTask()
         {
