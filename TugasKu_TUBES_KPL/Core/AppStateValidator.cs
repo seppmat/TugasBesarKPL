@@ -33,7 +33,8 @@ namespace TugasKu_TUBES_KPL
         {
             if (!CanTransition(task.Status, newStatus))
             {
-                throw new InvalidOperationException("Perpindahan status tidak diizinkan. Urutan: Belum > Proses > Selesai.");
+                throw new InvalidOperationException
+                    ("Perpindahan status tidak diizinkan. Urutan: Belum > Proses > Selesai.");
             }
             task.Status = newStatus;
         }
