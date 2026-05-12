@@ -1,7 +1,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+<<<<<<< HEAD
 using System.Configuration;
 using TugasKu_TUBES_KPL;
+=======
+using TugasKu_TUBES_KPL;
+using TugasKu_TUBES_KPL.Core;
+using TaskStatus = TugasKu_TUBES_KPL.TaskStatus;    
+>>>>>>> 61b2bf139511f48402b05b01c025f9093f9b809e
 
 namespace TugasKu.Tests
 {
@@ -23,11 +29,19 @@ namespace TugasKu.Tests
         }
 
         [TestMethod]
+<<<<<<< HEAD
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestValidator_ThrowsOnInvalidTransition()
         {
             var task = new TaskItem { Status = TaskStatus.NotStarted };
             AppStateValidator.ApplyTransition(task, TaskStatus.Done);
+=======
+        public void TestValidator_ThrowsOnInvalidTransition()
+        {
+            var task = new TaskItem { Status = TaskStatus.NotStarted };
+            Assert.Throws<InvalidOperationException>(() =>
+                AppStateValidator.ApplyTransition(task, TaskStatus.Done));
+>>>>>>> 61b2bf139511f48402b05b01c025f9093f9b809e
         }
 
         [TestMethod]

@@ -1,21 +1,26 @@
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System;
+using TugasKu.Test;
+using TugasKu.Tests;
 
-namespace TugasKu_TUBES_KPL.TugasKu.Tests
+namespace TugasKu.Test.PerformanceTests
 {
-    internal class Program
+    class Program
     {
-        static void Main(string[] args)
+        [STAThread]
+        static void Main()
         {
-            BenchmarkDaffa.Run();
-            BenchmarkEdward.Run();
-            BenchmarkIvan.Run();
-            BenchmarkRozi.Run();
+            Console.WriteLine("🚀 MEMULAI PERFORMANCE TESTING...");
+            Console.WriteLine("================================");
 
-            Console.WriteLine("\nSemua benchmark selesai.");
-            Console.ReadKey();
+            BenchmarkDaffa.Run();
+            BenchmarkIvan.Run();
+            BenchmarkEdward.Run();
+            BenchmarkRozi.Run();
+            BenchmarkYosep.Run();
+
+            Console.WriteLine("\n================================");
+            Console.WriteLine("✅ SELESAI. Tekan Enter untuk keluar.");
+            Console.ReadLine();
         }
     }
 }

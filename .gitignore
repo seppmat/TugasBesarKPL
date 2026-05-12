@@ -1,6 +1,7 @@
 .vs/
 bin/
 obj/
+TestResults/
 *.suo
 *.user
 packages/
