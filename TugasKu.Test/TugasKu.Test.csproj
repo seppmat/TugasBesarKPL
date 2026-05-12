@@ -3,9 +3,16 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>latest</LangVersion>
+<<<<<<< HEAD
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
+=======
+	<isTestProject>true</isTestProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+>>>>>>> 61b2bf139511f48402b05b01c025f9093f9b809e
   </PropertyGroup>
 
   <ItemGroup>

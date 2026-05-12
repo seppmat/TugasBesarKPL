@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace TugasKu_TUBES_KPL
+namespace TugasKu_TUBES_KPL.Core
 {
     // ✅ TECHNIQUE: Parameterization / Generics
     public class GenericRepository<T> where T : class

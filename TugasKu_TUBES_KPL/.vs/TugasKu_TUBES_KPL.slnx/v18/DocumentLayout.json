@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj.user||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TugasKu_TUBES_KPL.csproj.user||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TugasKu_TUBES_KPL.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
@@ -23,25 +19,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "TugasKu_TUBES_KPL.csproj.user",
-              "DocumentMoniker": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj.user",
-              "RelativeDocumentMoniker": "TugasKu_TUBES_KPL.csproj.user",
-              "ToolTip": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj.user",
-              "RelativeToolTip": "TugasKu_TUBES_KPL.csproj.user",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003464|",
-              "WhenOpened": "2026-05-05T15:58:44.067Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "TugasKu_TUBES_KPL.csproj",
               "DocumentMoniker": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj",
               "RelativeDocumentMoniker": "TugasKu_TUBES_KPL.csproj",
               "ToolTip": "D:\\Kuliah\\Konstruksi Perangkat Lunak\\Tugas Besar KPL Fix\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL\\TugasKu_TUBES_KPL.csproj",
               "RelativeToolTip": "TugasKu_TUBES_KPL.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAwAsAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2026-05-05T15:58:37.428Z",
               "EditorCaption": ""

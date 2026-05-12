@@ -1,7 +1,16 @@
+<<<<<<< HEAD
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using TugasKu_TUBES_KPL;
+=======
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using TugasKu_TUBES_KPL;
+using TugasKu_TUBES_KPL.Core;
+using TaskStatus = TugasKu_TUBES_KPL.TaskStatus;
+>>>>>>> 61b2bf139511f48402b05b01c025f9093f9b809e
 
 namespace TugasKu.Tests
 {
@@ -17,11 +26,21 @@ namespace TugasKu.Tests
         }
 
         [TestMethod]
+<<<<<<< HEAD
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestRepository_Update_InvalidIndex()
         {
             var repo = new GenericRepository<TaskItem>();
             repo.Update(99, new TaskItem());
+=======
+        public void TestRepository_Update_InvalidIndex_Throws()
+        {
+            var repo = new GenericRepository<TaskItem>();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                repo.Update(99, new TaskItem());
+            });
+>>>>>>> 61b2bf139511f48402b05b01c025f9093f9b809e
         }
 
         [TestMethod]
