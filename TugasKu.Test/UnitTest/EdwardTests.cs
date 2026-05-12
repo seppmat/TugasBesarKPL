@@ -1,0 +1,44 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using TugasKu_TUBES_KPL;
+
+namespace TugasKu.Tests
+{
+    [TestClass]
+    public class EdwardTests
+    {
+        [TestMethod]
+        public void TestRepository_AddAndCount()
+        {
+            var repo = new GenericRepository<TaskItem>();
+            repo.Add(new TaskItem { Name = "Test" });
+            Assert.AreEqual(1, repo.GetAll().Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestRepository_Update_InvalidIndex()
+        {
+            var repo = new GenericRepository<TaskItem>();
+            repo.Update(99, new TaskItem());
+        }
+
+        [TestMethod]
+        public void TestTableDriven_TryGetValueSuccess()
+        {
+            var table = new Dictionary<int, TaskStatus> { { 1, TaskStatus.InProgress } };
+            bool found = table.TryGetValue(1, out var result);
+            Assert.IsTrue(found);
+            Assert.AreEqual(TaskStatus.InProgress, result);
+        }
+
+        [TestMethod]
+        public void TestTableDriven_TryGetValueFail()
+        {
+            var table = new Dictionary<int, TaskStatus> { { 1, TaskStatus.InProgress } };
+            bool found = table.TryGetValue(99, out var result);
+            Assert.IsFalse(found);
+        }
+    }
+}
