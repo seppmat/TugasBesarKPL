@@ -1,40 +1,40 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Configuration;
-using System.Drawing;
+using TugasKu_TUBES_KPL;
 
-namespace TugasKu_TUBES_KPL
+namespace TugasKu.Tests
 {
-    // Teknik Runtime Configuration
-    public static class ConfigManager
+    [TestClass]
+    public class IvanTests
     {
-        // Ambil warna dari config, fallback ke default jika kosong/error
-        public static Color LoadColor(string key, Color defaultColor)
+        [TestMethod]
+        public void TestValidator_AllowNotStartedToInProgress()
         {
-            string val = ConfigurationManager.AppSettings[key];
-            if (string.IsNullOrEmpty(val)) return defaultColor;
-
-            try
-            {
-                return ColorTranslator.FromHtml(val);
-            }
-            catch
-            {
-                return defaultColor;
-            }
+            bool result = AppStateValidator.CanTransition(TaskStatus.NotStarted, TaskStatus.InProgress);
+            Assert.IsTrue(result);
         }
 
-        // Ambil nilai Enum dari config
-        public static T LoadEnum<T>(string key, T defaultValue) where T : struct, Enum
+        [TestMethod]
+        public void TestValidator_BlockNotStartedToDone()
         {
-            string val = ConfigurationManager.AppSettings[key];
-            if (string.IsNullOrEmpty(val)) return defaultValue;
+            bool result = AppStateValidator.CanTransition(TaskStatus.NotStarted, TaskStatus.Done);
+            Assert.IsFalse(result);
+        }
 
-            T result;
-            if (Enum.TryParse(val, true, out result))
-            {
-                return result;
-            }
-            return defaultValue;
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TestValidator_ThrowsOnInvalidTransition()
+        {
+            var task = new TaskItem { Status = TaskStatus.NotStarted };
+            AppStateValidator.ApplyTransition(task, TaskStatus.Done);
+        }
+
+        [TestMethod]
+        public void TestConfig_FallbackToDefault()
+        {
+            var color = ConfigManager.LoadColor("KeyTidakAda", System.Drawing.Color.Blue);
+            Assert.AreEqual(System.Drawing.Color.Blue, color);
         }
     }
 }
