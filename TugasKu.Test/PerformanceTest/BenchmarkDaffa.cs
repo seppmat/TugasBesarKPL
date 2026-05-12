@@ -1,34 +1,27 @@
 using System.Diagnostics;
 using System.Windows.Forms;
+using TugasKu_TUBES_KPL;
+using TaskStatus = TugasKu_TUBES_KPL.TaskStatus;
 
-namespace TugasKu_TUBES_KPL.TugasKu.Tests
+namespace TugasKu.Tests
 {
     public static class BenchmarkDaffa
     {
         public static void Run()
         {
-            Stopwatch sw = new Stopwatch();
+            Console.WriteLine("\n=== DAFFA: Automata (State Pattern) ===");
+            GC.Collect(); GC.WaitForPendingFinalizers(); GC.Collect();
 
-            sw.Start();
-
+            var sw = Stopwatch.StartNew();
             for (int i = 0; i < 50000; i++)
             {
-                TaskItem task = new TaskItem();
-
+                var task = new TaskItem();
                 task.SetStatus(TaskStatus.InProgress);
-
-                bool editable =
-                    task.CurrentState.CanEdit;
+                bool canEdit = task.CurrentState.CanEdit;
+                bool canDelete = task.CurrentState.CanDelete;
             }
-
             sw.Stop();
-
-            MessageBox.Show(
-                "=== PERFORMANCE TEST: DAFFA ===\n\n" +
-                "Loop: 50.000 iterasi\n" +
-                "Waktu: " +
-                sw.ElapsedMilliseconds +
-                " ms");
+            Console.WriteLine($"Loop: 50.000 | Waktu: {sw.ElapsedMilliseconds} ms | Rata-rata: {(sw.ElapsedTicks / 50000.0):F2} ticks/iterasi");
         }
     }
 }
