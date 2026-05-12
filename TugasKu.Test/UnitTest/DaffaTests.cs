@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TugasKu_TUBES_KPL;
+using TaskStatus = TugasKu_TUBES_KPL.TaskStatus;
 
 namespace TugasKu.Tests
 {

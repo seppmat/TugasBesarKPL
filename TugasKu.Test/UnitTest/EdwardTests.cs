@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using TugasKu_TUBES_KPL;
 using TugasKu_TUBES_KPL.Core;
+using TaskStatus = TugasKu_TUBES_KPL.TaskStatus;
 
 namespace TugasKu.Tests
 {
@@ -18,11 +19,13 @@ namespace TugasKu.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TestRepository_Update_InvalidIndex()
+        public void TestRepository_Update_InvalidIndex_Throws()
         {
             var repo = new GenericRepository<TaskItem>();
-            repo.Update(99, new TaskItem());
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                repo.Update(99, new TaskItem());
+            });
         }
 
         [TestMethod]

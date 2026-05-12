@@ -19,11 +19,11 @@ namespace TugasKu.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestService_AddNull_Throws()
         {
             ITaskService service = new TaskService();
-            service.AddTask(null);
+            Assert.Throws<ArgumentNullException>(() =>
+                service.AddTask(null));
         }
 
         [TestMethod]
