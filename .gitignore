@@ -1,0 +1,9 @@
+.vs/
+bin/
+obj/
+TestResults/
+*.suo
+*.user
+packages/
+*.exe.config
+*.xml
